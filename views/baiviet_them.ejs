@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <title><%= title %> - Trang tin điện tử</title>
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <%- include('navbar') %>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card mt-4 shadow-sm border-0">
+                    <div class="card-header bg-primary text-white fw-bold">
+                        <i class="bi bi-pencil-square me-2"></i> <%= title %>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="/baiviet/them" method="post" class="needs-validation" novalidate>
+                            
+                            <div class="mb-4">
+                                <label for="MaChuDe" class="form-label fw-semibold">Chủ đề bài viết</label>
+                                <select class="form-select" id="MaChuDe" name="MaChuDe" required>
+                                    <option value="" disabled selected>-- Vui lòng chọn chủ đề --</option>
+                                    <% chude.forEach(cd => { %>
+                                        <option value="<%= cd._id %>"><%= cd.TenChuDe %></option>
+                                    <% }); %>
+                                </select>
+                                <div class="invalid-feedback">Vui lòng chọn một chủ đề.</div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="TieuDe" class="form-label fw-semibold">Tiêu đề</label>
+                                <input type="text" class="form-control" id="TieuDe" name="TieuDe" placeholder="Nhập tiêu đề bài viết..." required />
+                                <div class="invalid-feedback">Tiêu đề không được để trống.</div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="TomTat" class="form-label fw-semibold">Tóm tắt (Sapo)</label>
+                                <textarea class="form-control" id="TomTat" name="TomTat" rows="3" placeholder="Đoạn mở đầu ngắn gọn thu hút người đọc..." required></textarea>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="NoiDung" class="form-label fw-semibold">Nội dung chi tiết</label>
+                                <textarea class="form-control" id="NoiDung" name="NoiDung" required></textarea>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <div class="d-flex justify-content-between">
+                                <a href="/baiviet/cuatoi" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Trở về
+                                </a>
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="bi bi-cloud-arrow-up"></i> Xuất bản bài viết
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <%- include('footer') %>
+    </div>
+    
+    <%- include('javascript') %>
+    
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+    <script>
+        // Đã sửa lại đường dẫn localhost thành đường dẫn tương đối để chạy được trên mây
+        CKEDITOR.replace('NoiDung', {
+            customConfig: '/js/config.js',
+            height: 400 // Chỉnh chiều cao khung soạn thảo cho rộng rãi
+        });
+    </script>
+</body>
+
+</html>
